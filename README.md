@@ -12,6 +12,8 @@ Unlike the original [Parcimonie], `parcimonie.sh` guarantees that each key refre
 
 You can check [the original Parcimonie design document][Parcimonie design.mdwn] if you are wondering why this is needed.
 
+The **tl;dr** version: `gpg --refresh-keys` discloses your entire list of PGP keys to the keyserver you are using, as well as [whoever is wiretapping your connection][National Security Agency] if you are using an unencrypted protocol such as `hkp` (which is the default for most setups). That is a bad thing.
+
 ## Dependencies
 
 * [GnuPG] 2
@@ -153,6 +155,7 @@ parcimonie-git                                 parcimonie-sh-git
 [Parcimonie]: https://gaffer.ptitcanardnoir.org/intrigeri/code/parcimonie/
 [GnuPG]: https://en.wikipedia.org/wiki/GNU_Privacy_Guard
 [Parcimonie design.mdwn]: https://code.ohloh.net/file?fid=BbMaEKchr9cDAOVs8ozX5mJ40g8&cid=RfbvTf3fwdw&s=&browser=Default&fp=405976&mpundefined&projSelected=true
+[National Security Agency]: https://en.wikipedia.org/wiki/National_Security_Agency
 [torsocks]: https://code.google.com/p/torsocks/
 [Tor]: https://www.torproject.org/
 [WTFPL]: http://www.wtfpl.net/
