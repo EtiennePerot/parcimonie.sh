@@ -6,7 +6,7 @@ This is a reimplementation of [Parcimonie], written completely in a si{mp,ng}le 
 
 `parcimonie.sh` refreshes keys in your [GnuPG] keyring at randomized intervals. Each key refresh happens over a unique, single-use Tor circuit.
 
-Unlike the original [Parcimonie], each Tor circuit is guaranteed to be unique even when multiple refreshes happen at the same time.
+Unlike the original [Parcimonie], `parcimonie.sh` guarantees that each key refresh happens over a unique Tor circuit even when multiple refreshes happen at the same time.
 
 ## Why?
 
@@ -38,11 +38,11 @@ Just run `parcimonie.sh`. There are some **optional** environment variables that
 Oh gee, let me think.
 
 ```
-$ pactree parcimonie-git
-parcimonie-git
-├─perl-any-moose
-│ ├─perl-moose
-│ │ ├─perl-class-load
+$ pactree parcimonie-git                       $ pactree -d 1 parcimonie-sh-git
+parcimonie-git                                 parcimonie-sh-git
+├─perl-any-moose                               ├─bash
+│ ├─perl-moose                                 ├─tor
+│ │ ├─perl-class-load                          └─torsocks
 │ │ │ ├─perl-module-runtime
 │ │ │ │ └─perl-params-classify
 │ │ │ ├─perl-data-optlist
@@ -143,14 +143,7 @@ parcimonie-git
 │ ├─perl-moose
 │ └─perl-moosex-role-parameterized
 └─perl
-  ├─gdbm
-  │ └─...
-  ├─db
-  │ └─...
-  ├─coreutils
-  │ └─...
-  ├─glibc
-  └─bash provides sh
+
 ```
 
 ## Licensing
