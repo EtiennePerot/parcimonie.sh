@@ -47,7 +47,7 @@ Just run `parcimonie.sh`. There are some **optional** environment variables that
 
 If you installed the Arch package, you have a parameterized systemd service called `parcimonie.sh@`. The parameter refers to an environment file in `/etc/parcimonie.sh.d`; for example, the `parcimonie.sh@hello` service reads the environment variables from `/etc/parcimonie.sh.d/hello.conf`, and runs `parcimonie.sh` with it.
 
-A sample configuration file is provided at `/etc/parcimonie.sh.d/sample-configuration.conf.sample`.
+A ready-to-use configuration file is provided at `/etc/parcimonie.sh.d/all-users.conf`; it is set to start `parcimonie.sh` for all users on the system who have a `~/.gnupg` directory. If that sounds like what you want, you can enable it right away using the `parcimonie.sh@all-users` service. If not, another sample configuration file is provided at `/etc/parcimonie.sh.d/sample-configuration.conf.sample`.
 
 ## Why a reimplementation?
 

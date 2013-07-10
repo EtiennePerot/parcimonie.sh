@@ -1,7 +1,7 @@
 # Maintainer: Etienne Perot <etienne at perot dot me>
 pkgname=parcimonie-sh-git
 pkgver=0
-pkgrel=1
+pkgrel=2
 pkgdesc='Bash reimplementation of parcimonie - Refresh your GnuPG keyring without disclosing your whole contact list to the world'
 arch=('any')
 url='https://github.com/EtiennePerot/parcimonie.sh'
@@ -41,6 +41,7 @@ package() {
 	install -D -m755 parcimonie.sh "${pkgdir}/usr/share/parcimonie.sh/parcimonie.sh"
 	install -D -m644 pkg/parcimonie.sh@.service "${pkgdir}/usr/lib/systemd/system/parcimonie.sh@.service"
 	install -D -m644 pkg/sample-configuration.conf.sample "${pkgdir}/etc/parcimonie.sh.d/sample-configuration.conf.sample"
+	install -D -m644 pkg/all-users.conf "${pkgdir}/etc/parcimonie.sh.d/all-users.conf"
 	mkdir -p "${pkgdir}/usr/bin"
 	ln -sf /usr/share/parcimonie.sh/parcimonie.sh "${pkgdir}/usr/bin/parcimonie.sh"
 }
