@@ -20,8 +20,44 @@ useRandom="${USE_RANDOM:-false}"
 # -----------------------------------------------------------------------------
 
 if [ "$(whoami)" != "$parcimonieUser" ]; then
-	exec su -c "$0" "$parcimonieUser"
+	if [ "$parcimonieUser" == '*' ]; then # If user requested the script to run for all users
+		if [ "$(id -u)" != 0 ]; then
+			echo 'Error: Must be run as root in order to support PARCIMONIE_USER="*".'
+			exit 1
+		fi
+		gnupgUsers=()
+		for user in $(cut -d ':' -f 1 < /etc/passwd); do
+			if [ -d "$(eval "echo ~$user")/.gnupg" ]; then
+				gnupgUsers+=("$user")
+			fi
+		done
+		# If we have 0 users, error out
+		if [ "${#gnupgUsers[@]}" -eq 0 ]; then
+			echo 'Error: No users found with a ~/.gnupg directory.'
+			exit 1
+		fi
+		# If we just have one user, just su to it
+		if [ "${#gnupgUsers[@]}" -eq 1 ]; then
+			export PARCIMONIE_USER="${gnupgUsers[0]}"
+			export GNUPG_HOMEDIR="$(eval "echo ~"${gnupgUsers[0]}"")/.gnupg"
+			exec su -c "$0" "${gnupgUsers[0]}"
+		fi
+		# If we have more than one, spawn children processes for each
+		childrenPids=()
+		for user in "${gnupgUsers[@]}"; do
+			PARCIMONIE_USER="$user" GNUPG_HOMEDIR="$(eval "echo ~$user")/.gnupg" su -c "$0" "$user" &
+			childrenPids+=("$!")
+		done
+		for childPid in "${childrenPids[@]}"; do
+			wait "$childPid"
+		done
+		exit 0
+	else # If the user requested the script to run for a specific user which is not the current one
+		exec su -c "$0" "$parcimonieUser"
+	fi
 fi
+
+# If we get here, we know that we are the right user.
 
 gnupgExec=("$gnupgBinary" --batch --with-colons)
 if [ -n "$gnupgHomedir" ]; then
