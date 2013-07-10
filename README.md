@@ -57,9 +57,9 @@ Oh gee, let me think.
 $ pactree parcimonie-git                       $ pactree -d 1 parcimonie-sh-git
 parcimonie-git                                 parcimonie-sh-git
 ├─perl-any-moose                               ├─bash
-│ ├─perl-moose                                 ├─tor
-│ │ ├─perl-class-load                          └─torsocks
-│ │ │ ├─perl-module-runtime
+│ ├─perl-moose                                 ├─torsocks
+│ │ ├─perl-class-load                          ├─tor
+│ │ │ ├─perl-module-runtime                    └─gnupg
 │ │ │ │ └─perl-params-classify
 │ │ │ ├─perl-data-optlist
 │ │ │ │ ├─perl-params-util
