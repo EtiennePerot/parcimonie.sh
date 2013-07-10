@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+if [ -n "$PARCIMONIE_CONF" ]; then
+	source "$PARCIMONIE_CONF" || exit 'Bad configuration file.'
+fi
+
+parcimonieUser="${PARCIMONIE_USER:-$(whoami)}"
 gnupgBinary="${GNUPG_BINARY:-gpg}"
 torsocksBinary="${TORSOCKS_BINARY:-torsocks}"
 gnupgHomedir="${GNUPG_HOMEDIR:-}"
@@ -12,6 +17,10 @@ tmpPrefix="${TMP_PREFIX:-/tmp/parcimonie}"
 useRandom="${USE_RANDOM:-false}"
 
 # -----------------------------------------------------------------------------
+
+if [ "$(whoami)" != "$parcimonieUser" ]; then
+	exec su -c "$0" "$parcimonieUser"
+fi
 
 gnupgExec=("$gnupgBinary" --batch --with-colons)
 if [ -n "$gnupgHomedir" ]; then
@@ -78,6 +87,11 @@ getTimeToWait() {
 	# = $minWaitTime + 1209600 / $(getNumKeys) % $(getRandom)
 	expr "$minWaitTime" '+' 1209600 '/' "$(getNumKeys)" '%' "$(getRandom)"
 }
+
+if [ "$(getNumKeys)" -eq 0 ]; then
+	echo 'No GnuPG keys found.'
+	exit 1
+fi
 
 cleanup
 while true; do

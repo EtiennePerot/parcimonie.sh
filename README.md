@@ -26,6 +26,7 @@ Just run `parcimonie.sh`. There are some **optional** environment variables that
 
 * `TOR_ADDRESS`: IP on which Tor is listening. If not set, uses `127.0.0.1`.
 * `TOR_PORT`: Port on which Tor is listening. If not set, uses `9050`. Make sure this refers to a `SOCKSPort` entry of your `torrc` for which `NoIsolateSOCKSAuth` is not present. If you have no idea what that means, you have nothing to worry about.
+* `PARCIMONIE_USER`: The user to run as. If not set, will run as whatever user is running the script. If set, will `su` to the specified user. Useful for boot scripts, and for config files for the systemd service.
 * `MIN_WAIT_TIME`: Minimum time to wait between key refreshes. Defaults to 900 seconds (15 minutes).
 * `USE_RANDOM`: Whether or not to use `/dev/random` instead of `/dev/urandom` as source of randomness. By default, this is set to `false`, therefore `/dev/urandom` is used.
 * `GNUPG_BINARY`: Path to `gpg`. If not set, will use `gpg` from the `$PATH`.
@@ -34,6 +35,7 @@ Just run `parcimonie.sh`. There are some **optional** environment variables that
 * `GNUPG_KEYSERVER`: Value for the `--keyserver` argument of `gpg`. If not set, no `--keyserver` argument is passed, which means your default keyserver will be used.
 * `GNUPG_KEYSERVER_OPTIONS`: Value for the `--keyserver-options` argument of `gpg`. If not set, no `--keyserver-options` argument is passed.
 * `TMP_PREFIX`: Prefix for temporary files. Defaults to `/tmp/parcimonie`.
+* `PARCIMONIE_CONF`: If set, this file will be sourced before running. Useful to set environment variables without polluting the environment too much.
 
 ## Why a reimplementation?
 
@@ -145,7 +147,6 @@ parcimonie-git                                 parcimonie-sh-git
 │ ├─perl-moose
 │ └─perl-moosex-role-parameterized
 └─perl
-
 ```
 
 ## Licensing
