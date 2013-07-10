@@ -2,6 +2,7 @@
 
 if [ -n "$PARCIMONIE_CONF" ]; then
 	source "$PARCIMONIE_CONF" || exit 'Bad configuration file.'
+	export PARCIMONIE_CONF='' # Children spawned by this script (if any) should not inherit those values
 fi
 
 parcimonieUser="${PARCIMONIE_USER:-$(whoami)}"
