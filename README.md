@@ -4,7 +4,7 @@ This is a reimplementation of [Parcimonie], written completely in a si{mp,ng}le 
 
 ## What does it do?
 
-`parcimonie.sh` refreshes keys in your [GnuPG] keyring at randomized intervals. Each key refresh happens over a unique, single-use Tor circuit.
+`parcimonie.sh` refreshes individual keys in your [GnuPG] keyring at randomized intervals. Each key is refreshed over a unique, single-use Tor circuit.
 
 Unlike the original [Parcimonie], `parcimonie.sh` guarantees that each key refresh happens over a unique Tor circuit even when multiple refreshes happen at the same time.
 
