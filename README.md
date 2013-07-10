@@ -12,7 +12,13 @@ Unlike the original [Parcimonie], `parcimonie.sh` guarantees that each key refre
 
 You can check [the original Parcimonie design document][Parcimonie design.mdwn] if you are wondering why this is needed.
 
-The **tl;dr** version: `gpg --refresh-keys` discloses your entire list of PGP keys to the keyserver you are using, as well as [whoever is wiretapping your connection][National Security Agency] if you are using an unencrypted protocol such as `hkp` (which is the default for most setups). That is a bad thing.
+The **tl;dr** version: `gpg --refresh-keys` discloses your entire list of PGP keys to the keyserver you are using, as well as [whoever is wiretapping your connection][National Security Agency] if you are using an unencrypted protocol such as HKP (which is the default for most setups). That is a bad thing.
+
+## Installation
+
+In on Arch, grab the [`parcimonie-sh-git` package][parcimonie-sh-git package on the Arch User Repository] from the [AUR][Arch User Repository].
+
+Otherwise, just copy `parcimonie.sh` somewhere and make it run at boot with the right environment variables (see the "Usage" section).
 
 ## Dependencies
 
@@ -36,6 +42,12 @@ Just run `parcimonie.sh`. There are some **optional** environment variables that
 * `GNUPG_KEYSERVER_OPTIONS`: Value for the `--keyserver-options` argument of `gpg`. If not set, no `--keyserver-options` argument is passed.
 * `TMP_PREFIX`: Prefix for temporary files. Defaults to `/tmp/parcimonie`.
 * `PARCIMONIE_CONF`: If set, this file will be sourced before running. Useful to set environment variables without polluting the environment too much.
+
+### systemd service
+
+If you installed the Arch package, you have a parameterized systemd service called `parcimonie@`. The parameter refers to an environment file in `/etc/parcimonie.sh.d`; for example, `parcimonie@hello` reads the environment variables from `/etc/parcimonie.sh.d/hello.conf`, and runs `parcimonie.sh` with it.
+
+A sample configuration file is provided at `/etc/parcimonie.sh.d/sample-configuration.conf.sample`.
 
 ## Why a reimplementation?
 
@@ -157,6 +169,8 @@ parcimonie-git                                 parcimonie-sh-git
 [GnuPG]: https://en.wikipedia.org/wiki/GNU_Privacy_Guard
 [Parcimonie design.mdwn]: https://code.ohloh.net/file?fid=BbMaEKchr9cDAOVs8ozX5mJ40g8&cid=RfbvTf3fwdw&s=&browser=Default&fp=405976&mpundefined&projSelected=true
 [National Security Agency]: https://en.wikipedia.org/wiki/National_Security_Agency
+[parcimonie-sh-git package on the Arch User Repository]: https://aur.archlinux.org/packages/parcimonie-sh-git
+[Arch User Repository]: https://aur.archlinux.org/
 [torsocks]: https://code.google.com/p/torsocks/
 [Tor]: https://www.torproject.org/
 [WTFPL]: http://www.wtfpl.net/
