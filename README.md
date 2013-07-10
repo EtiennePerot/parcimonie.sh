@@ -16,7 +16,7 @@ The **tl;dr** version: `gpg --refresh-keys` discloses your entire list of PGP ke
 
 ## Installation
 
-In on Arch, grab the [`parcimonie-sh-git` package][parcimonie-sh-git package on the Arch User Repository] from the [AUR][Arch User Repository].
+If on Arch, grab the [`parcimonie-sh-git` package][parcimonie-sh-git package on the Arch User Repository] from the [AUR][Arch User Repository].
 
 Otherwise, just copy `parcimonie.sh` somewhere and make it run at boot with the right environment variables (see the "Usage" section).
 
@@ -45,7 +45,7 @@ Just run `parcimonie.sh`. There are some **optional** environment variables that
 
 ### systemd service
 
-If you installed the Arch package, you have a parameterized systemd service called `parcimonie@`. The parameter refers to an environment file in `/etc/parcimonie.sh.d`; for example, `parcimonie@hello` reads the environment variables from `/etc/parcimonie.sh.d/hello.conf`, and runs `parcimonie.sh` with it.
+If you installed the Arch package, you have a parameterized systemd service called `parcimonie.sh@`. The parameter refers to an environment file in `/etc/parcimonie.sh.d`; for example, the `parcimonie.sh@hello` service reads the environment variables from `/etc/parcimonie.sh.d/hello.conf`, and runs `parcimonie.sh` with it.
 
 A sample configuration file is provided at `/etc/parcimonie.sh.d/sample-configuration.conf.sample`.
 
