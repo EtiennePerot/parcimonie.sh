@@ -121,8 +121,8 @@ getRandomKey() {
 getTimeToWait() {
 	#   minimum wait time + rand(2 * (seconds in a week / number of pubkeys))
 	# = minimum wait time + rand(seconds in 2 weeks / number of pubkeys)
-	# = $minWaitTime + 1209600 / $(getNumKeys) % $(getRandom)
-	expr "$minWaitTime" '+' 1209600 '/' "$(getNumKeys)" '%' "$(getRandom)"
+	# = $minWaitTime + $(getRandom) % (1209600 / $(getNumKeys))
+	expr "$minWaitTime" '+' "$(getRandom)" '%' '(' 1209600 '/' "$(getNumKeys)" ')'
 }
 
 if [ "$(getNumKeys)" -eq 0 ]; then
