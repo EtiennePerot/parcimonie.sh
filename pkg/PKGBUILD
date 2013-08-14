@@ -28,7 +28,7 @@ build() {
 
 check() {
 	cd "$srcdir/parcimonie.sh"
-		msg2 'Verifying GPG signature on HEAD commit.'
+	msg2 'Verifying GPG signature on HEAD commit.'
 	export GNUPGHOME="$(pwd)/.gnupg"
 	mkdir -p "$GNUPGHOME"
 	chmod 700 "$GNUPGHOME"
