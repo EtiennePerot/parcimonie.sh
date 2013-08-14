@@ -27,12 +27,23 @@ build() {
 }
 
 check() {
-	gpgKeyId="$(gpg --batch --with-colons < "$srcdir/pgp-key" | grep '^sub:' | head -1 | cut -d ':' -f 5)"
 	cd "$srcdir/parcimonie.sh"
-	if ! git log --pretty="format:%H,%G?,%GK" HEAD | head -1 | grep -q ",[GU],${gpgKeyId}\$"; then
-		error "Latest commit $(git rev-parse HEAD) is not signed by GPG key $gpgKeyId."
-		return 1
+		msg2 'Verifying GPG signature on HEAD commit.'
+	export GNUPGHOME="$(pwd)/.gnupg"
+	mkdir -p "$GNUPGHOME"
+	chmod 700 "$GNUPGHOME"
+	gpg --import < "$srcdir/pgp-key"
+	gpgKeyId="$(gpg --batch --with-colons < "$srcdir/pgp-key" | grep '^sub:' | head -1 | cut -d ':' -f 5)"
+	git log --max-count=1 --pretty="format:%H,%G?,%GK" HEAD | grep -q ",[GU],${gpgKeyId}\$"
+	returnValue="$?"
+	if [ "$returnValue" -eq 0 ]; then
+		msg2 'Latest commit is properly signed.'
+	else
+		error "Latest commit '$(git rev-parse HEAD)' is not signed by GPG key '$gpgKeyId'."
 	fi
+	rm -r "$GNUPGHOME"
+	unset GNUPGHOME
+	return "$returnValue"
 }
 
 package() {
