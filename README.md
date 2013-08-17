@@ -6,7 +6,7 @@ This is a reimplementation of [Parcimonie], written completely in a si{mp,ng}le 
 
 `parcimonie.sh` refreshes individual keys in your [GnuPG] keyring at randomized intervals. Each key is refreshed over a unique, single-use Tor circuit.
 
-Unlike the original [Parcimonie], `parcimonie.sh` guarantees that each key refresh happens over a unique Tor circuit even when multiple refreshes happen at the same time.
+Unlike the original [Parcimonie], `parcimonie.sh` guarantees that each key refresh happens over a unique Tor circuit even when multiple refreshes happen at the same time. ([How?][Unique Tor circuit creation])
 
 ## Why?
 
@@ -167,6 +167,7 @@ parcimonie-git                                 parcimonie-sh-git
 
 [Parcimonie]: https://gaffer.ptitcanardnoir.org/intrigeri/code/parcimonie/
 [GnuPG]: https://en.wikipedia.org/wiki/GNU_Privacy_Guard
+[Unique Tor circuit creation]: https://github.com/EtiennePerot/parcimonie.sh/commit/1598184c08e1cedf99d596d093b63fefe1212522#L0R9
 [Parcimonie design.mdwn]: https://code.ohloh.net/file?fid=BbMaEKchr9cDAOVs8ozX5mJ40g8&cid=RfbvTf3fwdw&s=&browser=Default&fp=405976&mpundefined&projSelected=true
 [National Security Agency]: https://en.wikipedia.org/wiki/National_Security_Agency
 [parcimonie-sh-git package on the Arch User Repository]: https://aur.archlinux.org/packages/parcimonie-sh-git
