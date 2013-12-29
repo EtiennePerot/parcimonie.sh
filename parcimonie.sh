@@ -79,12 +79,12 @@ getRandom() {
 	fi
 }
 
-gnupg() {
+nontor_gnupg() {
 	"${gnupgExec[@]}" "$@"
 	return "$?"
 }
 
-torgnupg() {
+tor_gnupg() {
 	local torsocksConfig returnCode
 	torsocksConfig="${tmpPrefix}-torsocks-$(getRandom).conf"
 	touch "$torsocksConfig"
@@ -103,7 +103,7 @@ cleanup() {
 }
 
 getPublicKeys() {
-	gnupg --list-public-keys --fixed-list-mode --fingerprint --with-key-data | grep -E '^fpr:' | sed -r 's/^fpr:+([0-9A-F]+):+$/\1/i'
+	nontor_gnupg --list-public-keys --fixed-list-mode --fingerprint --with-key-data | grep -E '^fpr:' | sed -r 's/^fpr:+([0-9A-F]+):+$/\1/i'
 }
 
 getNumKeys() {
@@ -144,6 +144,6 @@ while true; do
 	timeToSleep="$(getTimeToWait)"
 	echo "> Sleeping $timeToSleep seconds before refreshing key $keyToRefresh..."
 	sleep "$timeToSleep"
-	torgnupg --recv-keys "$keyToRefresh"
+	tor_gnupg --recv-keys "$keyToRefresh"
 done
 cleanup
