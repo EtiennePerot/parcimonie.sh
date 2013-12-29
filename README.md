@@ -34,10 +34,11 @@ Just run `parcimonie.sh`. There are some **optional** environment variables that
 * `TOR_PORT`: Port on which Tor is listening. If not set, uses `9050`. Make sure this refers to a `SOCKSPort` entry of your `torrc` for which `NoIsolateSOCKSAuth` is not present. If you have no idea what that means, you have nothing to worry about.
 * `PARCIMONIE_USER`: The user to run as. If not set, will run as whatever user is running the script. If set, will `su` to the specified user. You can also set it to the special value `*`, which will cause the script to multiple run instances of itself: one instance for each user who has a directory called `.gnupg` in their home directory. Useful for boot scripts, and for config files for the systemd service.
 * `MIN_WAIT_TIME`: Minimum time to wait between key refreshes. Defaults to 900 seconds (15 minutes).
+* `TARGET_REFRESH_TIME`: Rough expected time for refreshing every key in the keyring. Defaults to 604800 seconds (1 week). Note that this doesn't guarantee that every key will be refresh in that time. The time intervals between refreshes and the actual keys to refresh are picked randomly every time.
 * `USE_RANDOM`: Whether or not to use `/dev/random` instead of `/dev/urandom` as source of randomness. By default, this is set to `false`, therefore `/dev/urandom` is used.
 * `GNUPG_BINARY`: Path to `gpg`. If not set, will use `gpg` from the `$PATH`.
 * `TORSOCKS_BINARY`: Path to `torsocks`. If not set, will use `torsocks` from the `$PATH`.
-* `GNUPG_HOMEDIR`: Value for the `--homedir` argument of `gpg`. If not set, no `--homedir` argument is passed, which usually means `~/.gnupg` will be used.
+* `GNUPG_HOMEDIR`: Value for the `--homedir` argument of `gpg`. Ignored when `PARCIMONIE_USER=*`. If not set, no `--homedir` argument is passed, which usually means `~/.gnupg` will be used.
 * `GNUPG_KEYSERVER`: Value for the `--keyserver` argument of `gpg`. If not set, no `--keyserver` argument is passed, which means your default keyserver will be used.
 * `GNUPG_KEYSERVER_OPTIONS`: Value for the `--keyserver-options` argument of `gpg`. If not set, no `--keyserver-options` argument is passed.
 * `TMP_PREFIX`: Prefix for temporary files. Defaults to `/tmp/parcimonie`.

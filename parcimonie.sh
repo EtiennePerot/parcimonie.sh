@@ -14,6 +14,7 @@ gnupgKeyserverOptions="${GNUPG_KEYSERVER_OPTIONS:-}"
 torAddress="${TOR_ADDRESS:-127.0.0.1}"
 torPort="${TOR_PORT:-9050}"
 minWaitTime="${MIN_WAIT_TIME:-900}" # 15 minutes
+targetRefreshTime="${TARGET_REFRESH_TIME:-604800}" # 1 week
 tmpPrefix="${TMP_PREFIX:-/tmp/parcimonie}"
 useRandom="${USE_RANDOM:-false}"
 
@@ -119,10 +120,17 @@ getRandomKey() {
 }
 
 getTimeToWait() {
-	#   minimum wait time + rand(2 * (seconds in a week / number of pubkeys))
-	# = minimum wait time + rand(seconds in 2 weeks / number of pubkeys)
-	# = $minWaitTime + $(getRandom) % (1209600 / $(getNumKeys))
-	expr "$minWaitTime" '+' "$(getRandom)" '%' '(' 1209600 '/' "$(getNumKeys)" ')'
+	#   minimum wait time + rand(2 * (target refresh time / number of pubkeys))
+	# = $minWaitTime + $(getRandom) % (2 * $targetRefreshTime / $(getNumKeys))
+	# But if we have a lot of keys or a very short refresh time (2 * target refresh time < number of keys),
+	# then we can encounter a modulo by zero. In this case, we use the following as fallback:
+	#   minimum wait time + rand(minimum wait time)
+	# = $minWaitTime + $(getRandom) % $minWaitTime
+	if [ "$(expr '2' '*' "$targetRefreshTime")" -le "$(getNumKeys)" ]; then
+		expr "$minWaitTime" '+' "$(getRandom)" '%' "$minWaitTime"
+	else
+		expr "$minWaitTime" '+' "$(getRandom)" '%' '(' '2' '*' "$targetRefreshTime" '/' "$(getNumKeys)" ')'
+	fi
 }
 
 if [ "$(getNumKeys)" -eq 0 ]; then
