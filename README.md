@@ -34,7 +34,7 @@ Just run `parcimonie.sh`. There are some **optional** environment variables that
 * `TOR_PORT`: Port on which Tor is listening. If not set, uses `9050`. Make sure this refers to a `SOCKSPort` entry of your `torrc` for which `NoIsolateSOCKSAuth` is not present. If you have no idea what that means, you have nothing to worry about.
 * `PARCIMONIE_USER`: The user to run as. If not set, will run as whatever user is running the script. If set, will `su` to the specified user. You can also set it to the special value `*`, which will cause the script to multiple run instances of itself: one instance for each user who has a directory called `.gnupg` in their home directory. Useful for boot scripts, and for config files for the systemd service.
 * `MIN_WAIT_TIME`: Minimum time to wait between key refreshes. Defaults to 900 seconds (15 minutes).
-* `TARGET_REFRESH_TIME`: Rough expected time for refreshing every key in the keyring. Defaults to 604800 seconds (1 week). Note that this doesn't guarantee that every key will be refresh in that time. The time intervals between refreshes and the actual keys to refresh are picked randomly every time.
+* `TARGET_REFRESH_TIME`: Rough expected time for refreshing every key in the keyring. Defaults to 604800 seconds (1 week). Note that this doesn't guarantee that every key will be refreshed in that time. The time intervals between refreshes and the actual keys to refresh are picked randomly every time. See [the delay computation function][getTimeToWait function] for the exact formula.
 * `USE_RANDOM`: Whether or not to use `/dev/random` instead of `/dev/urandom` as source of randomness. By default, this is set to `false`, therefore `/dev/urandom` is used.
 * `GNUPG_BINARY`: Path to `gpg`. If not set, will use `gpg` from the `$PATH`.
 * `TORSOCKS_BINARY`: Path to `torsocks`. If not set, will use `torsocks` from the `$PATH`.
@@ -173,6 +173,7 @@ parcimonie-git                                 parcimonie-sh-git
 [National Security Agency]: https://en.wikipedia.org/wiki/National_Security_Agency
 [parcimonie-sh-git package on the Arch User Repository]: https://aur.archlinux.org/packages/parcimonie-sh-git
 [Arch User Repository]: https://aur.archlinux.org/
+[getTimeToWait function]: https://github.com/EtiennePerot/parcimonie.sh/blob/a5920d8d45bfe163d1963b3caa2d859f748ef8e2/parcimonie.sh#L122
 [torsocks]: https://code.google.com/p/torsocks/
 [Tor]: https://www.torproject.org/
 [WTFPL]: http://www.wtfpl.net/
