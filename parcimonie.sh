@@ -71,11 +71,18 @@ if [ -n "$gnupgKeyserverOptions" ]; then
 	gnupgExec+=(--keyserver-options "$gnupgKeyserverOptions")
 fi
 
-sedExtRegexp() {
+# Test for GNU `sed`, or use a `sed` fallback in sedExtRegexp
+sedExec=(sed)
+if echo "test the extended regexp flag" | sed -r &> /dev/null; then
 	# GNU Linux sed
-	#sed -r "$@"
+    sedExec+=(-r)
+else
 	# Mac OS (BSD?) sed
-	sed -E "$@"
+	sedExec+=(-E)
+fi
+
+sedExtRegexp() {
+	"${sedExec[@]}" "$@"
 }
 
 keepDigitsOnly() {
