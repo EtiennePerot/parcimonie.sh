@@ -71,11 +71,22 @@ if [ -n "$gnupgKeyserverOptions" ]; then
 	gnupgExec+=(--keyserver-options "$gnupgKeyserverOptions")
 fi
 
+sedExtRegexp() {
+	# GNU Linux sed
+	#sed -r "$@"
+	# Mac OS (BSD?) sed
+	sed -E "$@"
+}
+
+keepDigitsOnly() {
+	sedExtRegexp -e 's/[^[:digit:]]//g' -e '/^$/d'
+}
+
 getRandom() {
 	if [ -z "$useRandom" -o "$useRandom" == 'false' ]; then
-		od -vAn -N4 -tu4 < /dev/urandom | sed -r 's/\s+//'
+		od -vAn -N4 -tu4 < /dev/urandom | keepDigitsOnly
 	else
-		od -vAn -N4 -tu4 < /dev/random | sed -r 's/\s+//'
+		od -vAn -N4 -tu4 < /dev/random | keepDigitsOnly
 	fi
 }
 
@@ -103,11 +114,11 @@ cleanup() {
 }
 
 getPublicKeys() {
-	nontor_gnupg --list-public-keys --fixed-list-mode --fingerprint --with-key-data | grep -E '^fpr:' | sed -r 's/^fpr:+([0-9A-F]+):+$/\1/i'
+	nontor_gnupg --list-public-keys --fixed-list-mode --fingerprint --with-key-data | grep -E '^fpr:' | sedExtRegexp 's/^fpr:+([0-9a-fA-F]+):+$/\1/'
 }
 
 getNumKeys() {
-	getPublicKeys | wc -l
+	getPublicKeys | wc -l | keepDigitsOnly
 }
 
 getRandomKey() {
