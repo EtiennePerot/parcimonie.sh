@@ -73,11 +73,11 @@ fi
 
 # Test for GNU `sed`, or use a `sed` fallback in sedExtRegexp
 sedExec=(sed)
-if echo "test the extended regexp flag" | sed -r &> /dev/null; then
+if [ "$(echo 'abc' | sed -r 's/abc/def/' || true)" == 'def' ]; then
 	# GNU Linux sed
-    sedExec+=(-r)
+	sedExec+=(-r)
 else
-	# Mac OS (BSD?) sed
+	# Mac OS X sed
 	sedExec+=(-E)
 fi
 
