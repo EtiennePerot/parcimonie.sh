@@ -73,7 +73,7 @@ fi
 
 # Test for GNU `sed`, or use a `sed` fallback in sedExtRegexp
 sedExec=(sed)
-if [ "$(echo 'abc' | sed -r 's/abc/def/' || true)" == 'def' ]; then
+if [ "$(echo 'abc' | sed -r 's/abc/def/' 2> /dev/null || true)" == 'def' ]; then
 	# GNU Linux sed
 	sedExec+=(-r)
 else
