@@ -105,6 +105,7 @@ nontor_gnupg() {
 tor_gnupg() {
 	local torsocksConfig returnCode
 	torsocksConfig="${tmpPrefix}-torsocks-$(getRandom).conf"
+	umask 077
 	touch "$torsocksConfig"
 	chmod 600 "$torsocksConfig"
 	echo "server = $torAddress" > "$torsocksConfig"
