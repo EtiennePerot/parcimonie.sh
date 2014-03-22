@@ -105,12 +105,15 @@ nontor_gnupg() {
 tor_gnupg() {
 	local torsocksConfig returnCode
 	torsocksConfig="${tmpPrefix}-torsocks-$(getRandom).conf"
+	umask 077
 	touch "$torsocksConfig"
 	chmod 600 "$torsocksConfig"
 	echo "server = $torAddress" > "$torsocksConfig"
 	echo "server_port = $torPort" >> "$torsocksConfig"
 	echo "server_type = 5" >> "$torsocksConfig"
-	TORSOCKS_CONF_FILE="$torsocksConfig" TSOCKS_USERNAME="parcimonie-$(getRandom)" TSOCKS_PASSWORD="parcimonie-$(getRandom)" "$torsocksBinary" "${gnupgExec[@]}" "$@"
+	echo "default_user = $(getRandom)" >> "$torsocksConfig"
+	echo "default_pass = $(getRandom)" >> "$torsocksConfig"
+	TORSOCKS_CONF_FILE="$torsocksConfig" "$torsocksBinary" "${gnupgExec[@]}" "$@"
 	returnCode="$?"
 	rm -f "$torsocksConfig"
 	return "$returnCode"
