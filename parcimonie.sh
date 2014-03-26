@@ -124,7 +124,10 @@ cleanup() {
 }
 
 getPublicKeys() {
-	nontor_gnupg --list-public-keys --fixed-list-mode --fingerprint --with-key-data | grep -E '^fpr:' | sedExtRegexp 's/^fpr:+([0-9a-fA-F]+):+$/\1/'
+	nontor_gnupg --list-public-keys --with-colons --fixed-list-mode --with-fingerprint --with-fingerprint --with-key-data |
+		grep -A 1 '^pub:' |                          # only allow fingerprints of public keys (not subkeys)
+		grep -E   '^fpr:' |
+		sedExtRegexp 's/^fpr:+([0-9a-fA-F]+):+$/\1/' # extract the fingerprint
 }
 
 getNumKeys() {
