@@ -40,7 +40,7 @@ Just run `parcimonie.sh`. There are some **optional** environment variables that
 * `TORSOCKS_BINARY`: Path to `torsocks`. If not set, will use `torsocks` from the `$PATH`.
 * `GNUPG_HOMEDIR`: Value for the `--homedir` argument of `gpg`. Ignored when `PARCIMONIE_USER=*`. If not set, no `--homedir` argument is passed, which usually means `~/.gnupg` will be used.
 * `GNUPG_KEYSERVER`: Value for the `--keyserver` argument of `gpg`. If not set, no `--keyserver` argument is passed, which means your default keyserver will be used.
-* `GNUPG_KEYSERVER_OPTIONS`: Value for the `--keyserver-options` argument of `gpg`. If not set, no `--keyserver-options` argument is passed. If you already use torify connections to keyservers with gpg's `http-proxy` keyserver-option in your `gpg.conf`, you will need to pass `http-proxy=` here to disable it - torsocks 2.0 does not allow connections to `127.0.0.1`
+* `GNUPG_KEYSERVER_OPTIONS`: Value for the `--keyserver-options` argument of `gpg`. If not set, no `--keyserver-options` argument is passed. If you already use torify connections to keyservers with gpg's `http-proxy` keyserver-option in your `gpg.conf`, you will need to pass `http-proxy=` here to disable it. `parcimonie.sh` needs to run `gpg` with `torsocks` in order to ensure that all key grabs happen on different Tor circuits, and `torsocks` won't allow `gpg` to connect to its `http-proxy` on `127.0.0.1`.
 * `TMP_PREFIX`: Prefix for temporary files. Defaults to `/tmp/parcimonie`.
 * `PARCIMONIE_CONF`: If set, this file will be sourced before running. Useful to set environment variables without polluting the environment too much.
 
