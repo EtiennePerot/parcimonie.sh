@@ -3,7 +3,8 @@ Description=parcimonie with config file /etc/parcimonie.sh.d/%i.conf
 
 [Service]
 Type=simple
-ExecStart=/bin/bash -c "PARCIMONIE_CONF='/etc/parcimonie.sh.d/%i.conf' /usr/bin/parcimonie.sh"
+EnvironmentFile=/etc/parcimonie.sh.d/%i.conf
+ExecStart=/usr/bin/parcimonie.sh
 
 [Install]
 WantedBy=multi-user.target
