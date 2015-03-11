@@ -10,7 +10,7 @@ gnupgBinary="${GNUPG_BINARY:-gpg}"
 torsocksBinary="${TORSOCKS_BINARY:-torsocks}"
 gnupgHomedir="${GNUPG_HOMEDIR:-}"
 gnupgKeyserver="${GNUPG_KEYSERVER:-}"
-gnupgKeyserverOptions="${GNUPG_KEYSERVER_OPTIONS:-}"
+gnupgKeyserverOptions="${GNUPG_KEYSERVER_OPTIONS:-http-proxy=}"
 torAddress="${TOR_ADDRESS:-127.0.0.1}"
 torPort="${TOR_PORT:-9050}"
 minWaitTime="${MIN_WAIT_TIME:-900}" # 15 minutes
