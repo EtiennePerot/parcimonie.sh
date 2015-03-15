@@ -22,8 +22,8 @@ Otherwise, just copy `parcimonie.sh` somewhere and make it run at boot with the 
 
 ## Dependencies
 
-* [GnuPG] 2
-* [torsocks] 2.0
+* [GnuPG]: tested with GnuPG 2, probably works OK with 1.* as well
+* [torsocks]: 2.0
 * Have [Tor] running
 
 ## Usage
