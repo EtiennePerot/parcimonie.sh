@@ -174,6 +174,6 @@ parcimonie-git                                 parcimonie-sh-git
 [parcimonie-sh-git package on the Arch User Repository]: https://aur.archlinux.org/packages/parcimonie-sh-git
 [Arch User Repository]: https://aur.archlinux.org/
 [getTimeToWait function]: https://github.com/EtiennePerot/parcimonie.sh/blob/a5920d8d45bfe163d1963b3caa2d859f748ef8e2/parcimonie.sh#L122
-[torsocks]: https://code.google.com/p/torsocks/
+[torsocks]: https://gitweb.torproject.org/torsocks.git/
 [Tor]: https://www.torproject.org/
 [WTFPL]: http://www.wtfpl.net/
