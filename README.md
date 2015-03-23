@@ -169,7 +169,7 @@ parcimonie-git                                 parcimonie-sh-git
 [Parcimonie]: https://gaffer.ptitcanardnoir.org/intrigeri/code/parcimonie/
 [GnuPG]: https://en.wikipedia.org/wiki/GNU_Privacy_Guard
 [Unique Tor circuit creation]: https://github.com/EtiennePerot/parcimonie.sh/commit/1598184c08e1cedf99d596d093b63fefe1212522#L0R9
-[Parcimonie design.mdwn]: https://code.ohloh.net/file?fid=BbMaEKchr9cDAOVs8ozX5mJ40g8&cid=RfbvTf3fwdw&s=&browser=Default&fp=405976&mpundefined&projSelected=true
+[Parcimonie design.mdwn]: http://code.openhub.net/file?fid=BbMaEKchr9cDAOVs8ozX5mJ40g8&cid=RfbvTf3fwdw
 [National Security Agency]: https://en.wikipedia.org/wiki/National_Security_Agency
 [parcimonie-sh-git package on the Arch User Repository]: https://aur.archlinux.org/packages/parcimonie-sh-git
 [Arch User Repository]: https://aur.archlinux.org/
