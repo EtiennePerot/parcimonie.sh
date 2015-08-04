@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# Copyright © 2015 Etienne Perot <etienne at perot dot me>
+# This work is free. You can redistribute it and/or modify it under the
+# terms of the Do What The Fuck You Want To Public License, Version 2,
+# as published by Sam Hocevar. See http://www.wtfpl.net/ for more details.
+
 if [ -n "$PARCIMONIE_CONF" ]; then
 	source "$PARCIMONIE_CONF" || exit 'Bad configuration file.'
 	export PARCIMONIE_CONF='' # Children spawned by this script (if any) should not inherit those values
