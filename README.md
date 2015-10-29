@@ -18,6 +18,8 @@ The **tl;dr** version: `gpg --refresh-keys` discloses your entire list of PGP ke
 
 If on Arch, grab the [`parcimonie-sh-git` package][parcimonie-sh-git package on the Arch User Repository] from the [AUR][Arch User Repository].
 
+On Fedora, install [`parcimonie.sh`][parcimonie package in the Fedora package database] from the official repositories: `dnf install parcimonie.sh`.
+
 Otherwise, just copy `parcimonie.sh` somewhere and make it run at boot with the right environment variables (see the "Usage" section).
 
 ## Dependencies
@@ -46,9 +48,9 @@ Just run `parcimonie.sh`. There are some **optional** environment variables that
 
 ### systemd service
 
-If you installed the Arch package, you have a parameterized systemd service called `parcimonie.sh@`. The parameter refers to an environment file in `/etc/parcimonie.sh.d`; for example, the `parcimonie.sh@hello` service reads the environment variables from `/etc/parcimonie.sh.d/hello.conf`, and runs `parcimonie.sh` with it.
+If you installed the Arch package or the Fedora package, you have a parameterized systemd service called `parcimonie.sh@`. The parameter refers to an environment file in `/etc/parcimonie.sh.d`; for example, the `parcimonie.sh@hello` service reads the environment variables from `/etc/parcimonie.sh.d/hello.conf`, and runs `parcimonie.sh` with it.
 
-A ready-to-use configuration file is provided at `/etc/parcimonie.sh.d/all-users.conf`; it is set to start `parcimonie.sh` for all users on the system who have a `~/.gnupg` directory. If that sounds like what you want, you can enable it right away using the `parcimonie.sh@all-users` service. If not, another sample configuration file is provided at `/etc/parcimonie.sh.d/sample-configuration.conf.sample`.
+A ready-to-use configuration file is provided at `/etc/parcimonie.sh.d/all-users.conf`; it is set to start `parcimonie.sh` for all users on the system who have a `~/.gnupg` directory. If that sounds like what you want, you can enable it right away using the `parcimonie.sh@all-users` service. If not, another sample configuration file is provided at `/etc/parcimonie.sh.d/sample-configuration.conf.sample` (Arch package) or at `/usr/share/doc/parcimonie.sh/sample-configuration.conf.sample` (Fedora package).
 
 ## Why a reimplementation?
 
@@ -172,6 +174,7 @@ parcimonie-git                                 parcimonie-sh-git
 [Parcimonie design.mdwn]: http://code.openhub.net/file?fid=BbMaEKchr9cDAOVs8ozX5mJ40g8&cid=RfbvTf3fwdw
 [National Security Agency]: https://en.wikipedia.org/wiki/National_Security_Agency
 [parcimonie-sh-git package on the Arch User Repository]: https://aur.archlinux.org/packages/parcimonie-sh-git
+[parcimonie package in the Fedora package database]: https://admin.fedoraproject.org/pkgdb/package/parcimonie.sh/
 [Arch User Repository]: https://aur.archlinux.org/
 [getTimeToWait function]: https://github.com/EtiennePerot/parcimonie.sh/blob/a5920d8d45bfe163d1963b3caa2d859f748ef8e2/parcimonie.sh#L122
 [torsocks]: https://gitweb.torproject.org/torsocks.git/
