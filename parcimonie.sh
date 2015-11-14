@@ -140,12 +140,16 @@ getNumKeys() {
 }
 
 getRandomKey() {
-	local allPublicKeys fingerprint
+	local allPublicKeys fingerprint randomChoice
 	allPublicKeys=()
 	for fingerprint in $(getPublicKeys); do
 		allPublicKeys+=("$fingerprint")
 	done
-	echo "${allPublicKeys[$(expr "$(getRandom)" % "${#allPublicKeys[@]}")]}"
+	randomChoice=$(expr "$(getRandom)" % "${#allPublicKeys[@]}")
+	if [ "$randomChoice" -lt 0 ]; then
+		randomChoice=$(expr "$randomChoice" "*" "-1")
+	fi
+	echo "${allPublicKeys[$(expr "$(getRandom)" % "$randomChoice")]}"
 }
 
 getTimeToWait() {
@@ -155,11 +159,16 @@ getTimeToWait() {
 	# then we can encounter a modulo by zero. In this case, we use the following as fallback:
 	#   minimum wait time + rand(minimum wait time)
 	# = $minWaitTime + $(getRandom) % $minWaitTime
+	local waitTime
 	if [ "$(expr '2' '*' "$targetRefreshTime")" -le "$(getNumKeys)" ]; then
-		expr "$minWaitTime" '+' "$(getRandom)" '%' "$minWaitTime"
+		waitTime=$(expr "$minWaitTime" '+' "$(getRandom)" '%' "$minWaitTime")
 	else
-		expr "$minWaitTime" '+' "$(getRandom)" '%' '(' '2' '*' "$targetRefreshTime" '/' "$(getNumKeys)" ')'
+		waitTime=$(expr "$minWaitTime" '+' "$(getRandom)" '%' '(' '2' '*' "$targetRefreshTime" '/' "$(getNumKeys)" ')')
 	fi
+	if [ "$waitTime" -lt 0 ]; then
+		waitTime=$(expr "$waitTime" "*" "-1")
+	fi
+	echo "$waitTime"
 }
 
 if [ "$(getNumKeys)" -eq 0 ]; then
