@@ -145,11 +145,11 @@ getRandomKey() {
 	for fingerprint in $(getPublicKeys); do
 		allPublicKeys+=("$fingerprint")
 	done
-	randomChoice=$(expr "$(getRandom)" % "${#allPublicKeys[@]}")
+	randomChoice="$(expr "$(getRandom)" % "${#allPublicKeys[@]}")"
 	if [ "$randomChoice" -lt 0 ]; then
-		randomChoice=$(expr "$randomChoice" "*" "-1")
+		randomChoice="$(expr "$randomChoice" '*' '-1')"
 	fi
-	echo "${allPublicKeys[$(expr "$(getRandom)" % "$randomChoice")]}"
+	echo "${allPublicKeys["$(expr "$(getRandom)" % "$randomChoice")"]}"
 }
 
 getTimeToWait() {
@@ -161,12 +161,12 @@ getTimeToWait() {
 	# = $minWaitTime + $(getRandom) % $minWaitTime
 	local waitTime
 	if [ "$(expr '2' '*' "$targetRefreshTime")" -le "$(getNumKeys)" ]; then
-		waitTime=$(expr "$minWaitTime" '+' "$(getRandom)" '%' "$minWaitTime")
+		waitTime="$(expr "$minWaitTime" '+' "$(getRandom)" '%' "$minWaitTime")"
 	else
-		waitTime=$(expr "$minWaitTime" '+' "$(getRandom)" '%' '(' '2' '*' "$targetRefreshTime" '/' "$(getNumKeys)" ')')
+		waitTime="$(expr "$minWaitTime" '+' "$(getRandom)" '%' '(' '2' '*' "$targetRefreshTime" '/' "$(getNumKeys)" ')')"
 	fi
 	if [ "$waitTime" -lt 0 ]; then
-		waitTime=$(expr "$waitTime" "*" "-1")
+		waitTime="$(expr "$waitTime" '*' '-1')"
 	fi
 	echo "$waitTime"
 }
