@@ -20,6 +20,7 @@ torAddress="${TOR_ADDRESS:-127.0.0.1}"
 torPort="${TOR_PORT:-9050}"
 minWaitTime="${MIN_WAIT_TIME:-900}" # 15 minutes
 targetRefreshTime="${TARGET_REFRESH_TIME:-604800}" # 1 week
+computerOnlineFraction="${COMPUTER_ONLINE_FRACTION:-1.0}" # 100% of the time
 tmpPrefix="${TMP_PREFIX:-/tmp/parcimonie}"
 useRandom="${USE_RANDOM:-false}"
 
@@ -149,21 +150,33 @@ getRandomKey() {
 }
 
 getTimeToWait() {
-	#   minimum wait time + rand(2 * (target refresh time / number of pubkeys))
-	# = $minWaitTime + $(getRandom) % (2 * $targetRefreshTime / $(getNumKeys))
-	# But if we have a lot of keys or a very short refresh time (2 * target refresh time < number of keys),
+	# The target refresh time is scaled by the fraction of time that the computer is expected to be online.
+	# expr or bash's $(()) don't support fractional math. Use awk.
+	local scaledRefreshTime
+	scaledRefreshTime="$targetRefreshTime"
+	if [ "$computerOnlineFraction" != '1.0' -a "$computerOnlineFraction" != '1' ]; then
+		scaledRefreshTime="$(echo "$scaledRefreshTime" "$computerOnlineFraction" | awk 'BEGIN {print sprintf("%.0f", $1 * $2)}')"
+	fi
+	#   minimum wait time + rand(2 * (refresh time / number of pubkeys))
+	# = $minWaitTime + $(getRandom) % (2 * $scaledRefreshTime / $(getNumKeys))
+	# But if we have a lot of keys or a very short refresh time (2 * refresh time < number of keys),
 	# then we can encounter a modulo by zero. In this case, we use the following as fallback:
 	#   minimum wait time + rand(minimum wait time)
 	# = $minWaitTime + $(getRandom) % $minWaitTime
-	if [ "$(expr '2' '*' "$targetRefreshTime")" -le "$(getNumKeys)" ]; then
+	if [ "$(expr '2' '*' "$scaledRefreshTime")" -le "$(getNumKeys)" ]; then
 		expr "$minWaitTime" '+' "$(getRandom)" '%' "$minWaitTime"
 	else
-		expr "$minWaitTime" '+' "$(getRandom)" '%' '(' '2' '*' "$targetRefreshTime" '/' "$(getNumKeys)" ')'
+		expr "$minWaitTime" '+' "$(getRandom)" '%' '(' '2' '*' "$scaledRefreshTime" '/' "$(getNumKeys)" ')'
 	fi
 }
 
 if [ "$(getNumKeys)" -eq 0 ]; then
 	echo 'No GnuPG keys found.'
+	exit 1
+fi
+
+if [ "$(echo "$computerOnlineFraction" | awk '{ print ($1 < 0.1 || $1 > 1.0) ? "bad" : "good" }')" == 'bad' ]; then
+	echo 'COMPUTER_ONLINE_FRACTION must be between 0.1 and 1.0.' >&2
 	exit 1
 fi
 
