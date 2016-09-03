@@ -10,7 +10,7 @@ Unlike the original [Parcimonie], `parcimonie.sh` guarantees that each key refre
 
 ## Why?
 
-You can check [the original Parcimonie design document][Parcimonie design.mdwn] if you are wondering why this is needed.
+You can check [the original Parcimonie design document][parcimonie-original-design.md] if you are wondering why this is needed. _This is the original file from the perl parcimonie and is only here to be archived._
 
 The **tl;dr** version: `gpg --refresh-keys` discloses your entire list of PGP keys to the keyserver you are using, as well as [whoever is wiretapping your connection][National Security Agency] if you are using an unencrypted protocol such as HKP (which is the default for most setups). That is a bad thing.
 
@@ -172,7 +172,7 @@ parcimonie-git                                 parcimonie-sh-git
 [Parcimonie]: https://gaffer.ptitcanardnoir.org/intrigeri/code/parcimonie/
 [GnuPG]: https://en.wikipedia.org/wiki/GNU_Privacy_Guard
 [Unique Tor circuit creation]: https://github.com/EtiennePerot/parcimonie.sh/commit/1598184c08e1cedf99d596d093b63fefe1212522#L0R9
-[Parcimonie design.mdwn]: https://github.com/EtiennePerot/parcimonie.sh/blob/master/design.mdwn
+[parcimonie-original-design.md]: https://github.com/EtiennePerot/parcimonie.sh/blob/master/parcimonie-original-design.md
 [National Security Agency]: https://en.wikipedia.org/wiki/National_Security_Agency
 [parcimonie-sh-git package on the Arch User Repository]: https://aur.archlinux.org/packages/parcimonie-sh-git
 [parcimonie package in the Fedora package database]: https://admin.fedoraproject.org/pkgdb/package/parcimonie.sh/
