@@ -111,10 +111,10 @@ nontor_gnupg() {
 tor_gnupg() {
 	local torsocksConfig returnCode
 	umask 077
-    # Create tmp dir
-    mkdir -p $tmpPrefix
-    # Create tmp file
-    torsocksConfig="$(mktemp -p ${tmpPrefix} torsocks-XXXX.conf)"
+	# Create tmp dir
+	mkdir -p "$tmpPrefix"
+	# Create tmp file
+	torsocksConfig="$(mktemp -p $tmpPrefix torsocks-XXXX.conf)"
 	chmod 600 "$torsocksConfig"
 	echo "TorAddress $torAddress" > "$torsocksConfig"
 	echo "TorPort $torPort" >> "$torsocksConfig"
