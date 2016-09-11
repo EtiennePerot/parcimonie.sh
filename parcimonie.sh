@@ -114,7 +114,7 @@ tor_gnupg() {
 	# Create tmp dir
 	mkdir -p "$tmpPrefix"
 	# Create tmp file
-	torsocksConfig="$(mktemp -p $tmpPrefix torsocks-XXXX.conf)"
+	torsocksConfig="$(mktemp -p "$tmpPrefix" torsocks-XXXX.conf)"
 	chmod 600 "$torsocksConfig"
 	echo "TorAddress $torAddress" > "$torsocksConfig"
 	echo "TorPort $torPort" >> "$torsocksConfig"
