@@ -131,7 +131,7 @@ cleanup() {
 }
 
 getPublicKeys() {
-	nontor_gnupg --list-public-keys --with-colons --fixed-list-mode --with-fingerprint --with-fingerprint --with-key-data |
+	nontor_gnupg --list-public-keys --with-colons --fixed-list-mode --with-fingerprint --with-key-data |
 		grep -a -A 1 '^pub:' |                       # only allow fingerprints of public keys (not subkeys)
 		grep -E   '^fpr:+[0-9a-fA-F]{40,}:' |        # only allow fingerprints of v4 pgp keys
 		                                             # (v3 fingerprints consist of 32 hex characters)
