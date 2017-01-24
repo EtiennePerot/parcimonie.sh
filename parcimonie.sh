@@ -21,7 +21,6 @@ torPort="${TOR_PORT:-9050}"
 minWaitTime="${MIN_WAIT_TIME:-900}" # 15 minutes
 targetRefreshTime="${TARGET_REFRESH_TIME:-604800}" # 1 week
 computerOnlineFraction="${COMPUTER_ONLINE_FRACTION:-1.0}" # 100% of the time
-tmpPrefix="${TMP_PREFIX:-/tmp/parcimonie}"
 useRandom="${USE_RANDOM:-false}"
 
 # -----------------------------------------------------------------------------
@@ -109,25 +108,7 @@ nontor_gnupg() {
 }
 
 tor_gnupg() {
-	local torsocksConfig returnCode
-	umask 077
-	# Create tmp dir
-	mkdir -p "$tmpPrefix"
-	# Create tmp file
-	torsocksConfig="$(mktemp -p "$tmpPrefix" torsocks-XXXX.conf)"
-	chmod 600 "$torsocksConfig"
-	echo "TorAddress $torAddress" > "$torsocksConfig"
-	echo "TorPort $torPort" >> "$torsocksConfig"
-	echo "SOCKS5Username parcimonie-$(getRandom)" >> "$torsocksConfig"
-	echo "SOCKS5Password parcimonie-$(getRandom)" >> "$torsocksConfig"
-	TORSOCKS_CONF_FILE="$torsocksConfig" "$torsocksBinary" "${gnupgExec[@]}" "$@"
-	returnCode="$?"
-	rm -f "$torsocksConfig"
-	return "$returnCode"
-}
-
-cleanup() {
-	rm -f "$tmpPrefix"* &> /dev/null
+	"$torsocksBinary" --isolate "${gnupgExec[@]}" "$@"
 }
 
 getPublicKeys() {
@@ -182,7 +163,6 @@ if [ "$(echo "$computerOnlineFraction" | awk '{ print ($1 < 0.1 || $1 > 1.0) ? "
 	exit 1
 fi
 
-cleanup
 while true; do
 	keyToRefresh="$(getRandomKey)"
 	timeToSleep="$(getTimeToWait)"
@@ -190,4 +170,3 @@ while true; do
 	sleep "$timeToSleep"
 	tor_gnupg --recv-keys "$keyToRefresh"
 done
-cleanup

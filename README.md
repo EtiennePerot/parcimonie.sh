@@ -6,7 +6,7 @@ This is a reimplementation of [Parcimonie], written completely in a si{mp,ng}le 
 
 `parcimonie.sh` refreshes individual keys in your [GnuPG] keyring at randomized intervals. Each key is refreshed over a unique, single-use Tor circuit.
 
-Unlike the original [Parcimonie], `parcimonie.sh` guarantees that each key refresh happens over a unique Tor circuit even when multiple refreshes happen at the same time. ([How?][Unique Tor circuit creation])
+Unlike the original [Parcimonie], `parcimonie.sh` guarantees that each key refresh happens over a unique Tor circuit even when multiple refreshes happen at the same time (`torsocks --isolate`).
 
 ## Why?
 
@@ -49,7 +49,6 @@ Just run `parcimonie.sh`. There are some **optional** environment variables that
 * `GNUPG_HOMEDIR`: Value for the `--homedir` argument of `gpg`. Ignored when `PARCIMONIE_USER=*`. If not set, no `--homedir` argument is passed, which usually means `~/.gnupg` will be used.
 * `GNUPG_KEYSERVER`: Value for the `--keyserver` argument of `gpg`. If not set, no `--keyserver` argument is passed, which means your default keyserver will be used.
 * `GNUPG_KEYSERVER_OPTIONS`: Value for the `--keyserver-options` argument of `gpg`. If not set, a single `http-proxy=` argument is passed. If you already use torify connections to keyservers with gpg's `http-proxy` keyserver-option in your `gpg.conf` while having other keyserver-options defined on top of that, you will need to re-specify those along with `http-proxy=` in `GNUPG_KEYSERVER_OPTIONS` in order to disable the proxying part. `parcimonie.sh` needs to run `gpg` with `torsocks` in order to ensure that all key grabs happen on different Tor circuits, and `torsocks` won't allow `gpg` to connect to its `http-proxy` on `127.0.0.1`.
-* `TMP_PREFIX`: Prefix for temporary files. Defaults to `/tmp/parcimonie`.
 * `PARCIMONIE_CONF`: If set, this file will be sourced before running. Useful to set environment variables without polluting the environment too much.
 
 ### systemd service
@@ -176,7 +175,6 @@ parcimonie-git                                 parcimonie-sh-git
 
 [Parcimonie]: https://gaffer.ptitcanardnoir.org/intrigeri/code/parcimonie/
 [GnuPG]: https://en.wikipedia.org/wiki/GNU_Privacy_Guard
-[Unique Tor circuit creation]: https://github.com/EtiennePerot/parcimonie.sh/commit/1598184c08e1cedf99d596d093b63fefe1212522#L0R9
 [parcimonie-original-design.md]: https://github.com/EtiennePerot/parcimonie.sh/blob/master/parcimonie-original-design.md
 [National Security Agency]: https://en.wikipedia.org/wiki/National_Security_Agency
 [parcimonie-sh-git package on the Arch User Repository]: https://aur.archlinux.org/packages/parcimonie-sh-git
