@@ -14,6 +14,11 @@ You can check [the original Parcimonie design document][parcimonie-original-desi
 
 The **tl;dr** version: `gpg --refresh-keys` discloses your entire list of PGP keys to the keyserver you are using, as well as [whoever is wiretapping your connection][National Security Agency] if you are using an unencrypted protocol such as HKP (which is the default for most setups). That is a bad thing.
 
+## Known security issues
+
+* On GnuPG 2.1+, key refreshes are not guaranteed to use unique Tor circuit (issue #15).
+* On GnuPG 2.1+, if the user refreshes a key outside of `parcimonie.sh` prior to `parcimonie.sh`'s first key refresh, **Tor will not be used for key refreshes** (also issue #15).
+
 ## Installation
 
 If on Arch, grab the [`parcimonie-sh-git` package][parcimonie-sh-git package on the Arch User Repository] from the [AUR][Arch User Repository].
