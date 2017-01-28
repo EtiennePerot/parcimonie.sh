@@ -44,7 +44,9 @@ Just run `parcimonie.sh`. There are some **optional** environment variables that
 * `TARGET_REFRESH_TIME`: Rough expected time for refreshing every key in the keyring. Defaults to 604800 seconds (1 week). Note that this doesn't guarantee that every key will be refreshed in that time. The time intervals between refreshes and the actual keys to refresh are picked randomly every time. See [the delay computation function][getTimeToWait function] for the exact formula.
 * `COMPUTER_ONLINE_FRACTION`: Fraction of time that the computer is expected to be online, from 0.1 (online 10% of the time) to 1.0 (always online). Defaults to 1.0. This is used to scale `TARGET_REFRESH_TIME` accordingly in order to make it likely enough for keys to be regularly refreshed on a computer that is not online permanently. `MIN_WAIT_TIME` is still honored.
 * `USE_RANDOM`: Whether or not to use `/dev/random` instead of `/dev/urandom` as source of randomness. By default, this is set to `false`, therefore `/dev/urandom` is used.
-* `GNUPG_BINARY`: Path to `gpg`. If not set, will use `gpg` from the `$PATH`.
+* `GNUPG_BINARY`: Path to `gpg`. If not set, will use `gpg2` or `gpg` from the `$PATH`.
+* `DIRMNGR_PATH`: Path to `dirmngr`, for GnuPG < 2.1. If not set, will try to find it in `$PATH`. If not found, GnuPG < 2.1 will be assumed.
+* `DIRMNGR_CLIENT_PATH`: Path to `dirmngr-client`. If not set, will try to find it in `$PATH`. `dirmngr-client` is required if `dirmngr` is specified or found in `$PATH`.
 * `TORSOCKS_BINARY`: Path to `torsocks`. If not set, will use `torsocks` from the `$PATH`.
 * `GNUPG_HOMEDIR`: Value for the `--homedir` argument of `gpg`. Ignored when `PARCIMONIE_USER=*`. If not set, no `--homedir` argument is passed, which usually means `~/.gnupg` will be used.
 * `GNUPG_KEYSERVER`: Value for the `--keyserver` argument of `gpg`. If not set, no `--keyserver` argument is passed, which means your default keyserver will be used.

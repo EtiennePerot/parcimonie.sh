@@ -11,7 +11,7 @@ if [ -n "$PARCIMONIE_CONF" ]; then
 fi
 
 parcimonieUser="${PARCIMONIE_USER:-$(whoami)}"
-gnupgBinary="${GNUPG_BINARY:-gpg}"
+gnupgBinary="${GNUPG_BINARY:-}"
 torsocksBinary="${TORSOCKS_BINARY:-torsocks}"
 gnupgHomedir="${GNUPG_HOMEDIR:-}"
 gnupgKeyserver="${GNUPG_KEYSERVER:-}"
@@ -22,6 +22,8 @@ minWaitTime="${MIN_WAIT_TIME:-900}" # 15 minutes
 targetRefreshTime="${TARGET_REFRESH_TIME:-604800}" # 1 week
 computerOnlineFraction="${COMPUTER_ONLINE_FRACTION:-1.0}" # 100% of the time
 useRandom="${USE_RANDOM:-false}"
+dirmngrPath="${DIRMNGR_PATH-}"
+dirmngrClientPath="${DIRMNGR_CLIENT_PATH-}"
 
 # -----------------------------------------------------------------------------
 
@@ -64,6 +66,59 @@ if [ "$(whoami)" != "$parcimonieUser" ]; then
 fi
 
 # If we get here, we know that we are the right user.
+
+# Find the gpg binary.
+if [ -n "$gnupgBinary" ]; then
+	if [ ! -x "$gnupgBinary" ]; then
+		echo "Error: GNUPG_BINARY '$GNUPG_BINARY' does not exist or is not executable."
+		exit 1
+	fi
+elif which gpg2 &> /dev/null; then
+	# Try to find it in $PATH.
+	gnupgBinary="$(which gpg2)"
+	echo "Detected gpg2 at '$gnupgBinary'."
+elif which gpg &> /dev/null; then
+	gnupgBinary="$(which gpg)"
+	echo "Detected gpg at '$gnupgBinary'."
+else
+	echo 'gpg not found. Please make sure you have installed GnuPG.'
+	echo 'You may manually specify the full path to gpg with GNUPG_BINARY.'
+	exit 1
+fi
+
+# Test for dirmngr, used in GnuPG >= 2.1 for keyserver communication.
+if [ -n "$dirmngrPath" ]; then
+	if [ ! -x "$dirmngrPath" ]; then
+		echo "Error: DIRMNGR_PATH '$DIRMNGR_PATH' does not exist or is not executable."
+		exit 1
+	fi
+elif which dirmngr &> /dev/null; then
+	# Try to find dirmngr in $PATH.
+	dirmngrPath="$(which dirmngr)"
+	echo "Detected dirmngr at '$dirmngrPath'; assuming GnuPG >= 2.1."
+else
+	echo 'dirmngr not specified, and not found in $PATH. Assuming GnuPG < 2.1.'
+fi
+
+if [ -n "$dirmngrPath" ]; then
+	# If we are using dirmngr, we must also have dirmngr-client.
+	if [ -n "$dirmngrClientPath" ]; then
+		if [ ! -x "$dirmngrClientPath" ]; then
+			echo "Error: DIRMNGR_CLIENT_PATH '$DIRMNGR_CLIENT_PATH' does not exist or is not executable."
+			exit 1
+		fi
+	elif which dirmngr-client &> /dev/null; then
+		# Try to find it in $PATH. Unlike dirmngr, it is a fatal error if we cannot find it,
+		# because we need it to handle dirmngr properly.
+		dirmngrClientPath="$(which dirmngr-client)"
+		echo "Detected dirmngr-client at '$dirmngrClientPath'."
+	else
+		echo "dirmngr-client not found, while dirmngr was found at '$dirmngrPath'."
+		echo 'Please make sure your installation of GnuPG is complete.'
+		echo 'You may manually specify the full path to dirmngr-client with DIRMNGR_CLIENT_PATH.'
+		exit 1
+	fi
+fi
 
 gnupgExec=("$gnupgBinary" --batch --with-colons)
 if [ -n "$gnupgHomedir" ]; then
