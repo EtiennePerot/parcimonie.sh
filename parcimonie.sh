@@ -34,7 +34,7 @@ if [ "$(whoami)" != "$parcimonieUser" ]; then
 			exit 1
 		fi
 		gnupgUsers=()
-		for user in $(cut -d ':' -f 1 < /etc/passwd); do
+		for user in $(getent passwd | cut -d ':' -f 1); do
 			if [ -d "$(eval "echo ~$user")/.gnupg" ]; then
 				gnupgUsers+=("$user")
 			fi
