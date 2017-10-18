@@ -14,11 +14,6 @@ You can check [the original Parcimonie design document][parcimonie-original-desi
 
 The **tl;dr** version: `gpg --refresh-keys` discloses your entire list of PGP keys to the keyserver you are using, as well as [whoever is wiretapping your connection][National Security Agency] if you are using an unencrypted protocol such as HKP (which is the default for most setups). That is a bad thing.
 
-## Known security issues
-
-* On GnuPG 2.1+, key refreshes are not guaranteed to use unique Tor circuit (issue #15).
-* On GnuPG 2.1+, if the user refreshes a key outside of `parcimonie.sh` prior to `parcimonie.sh`'s first key refresh, **Tor will not be used for key refreshes** (also issue #15).
-
 ## Installation
 
 If on Arch, grab the [`parcimonie-sh-git` package][parcimonie-sh-git package on the Arch User Repository] from the [AUR][Arch User Repository].
@@ -29,7 +24,7 @@ Otherwise, just copy `parcimonie.sh` somewhere and make it run at boot with the 
 
 ## Dependencies
 
-* [GnuPG]: tested with GnuPG 2, probably works OK with 1.* as well
+* [GnuPG]: Should work with any version between `1.x` and `2.1.x`. Probably works with later versions too.
 * [torsocks]: 2.0
 * Have [Tor] running
 
@@ -47,6 +42,7 @@ Just run `parcimonie.sh`. There are some **optional** environment variables that
 * `GNUPG_BINARY`: Path to `gpg`. If not set, will use `gpg2` or `gpg` from the `$PATH`.
 * `DIRMNGR_PATH`: Path to `dirmngr`, for GnuPG < 2.1. If not set, will try to find it in `$PATH`. If not found, GnuPG < 2.1 will be assumed.
 * `DIRMNGR_CLIENT_PATH`: Path to `dirmngr-client`. If not set, will try to find it in `$PATH`. `dirmngr-client` is required if `dirmngr` is specified or found in `$PATH`.
+* `GPG_CONNECT_AGENT_PATH`: Path to `gpg-connect-agent`. If not set, will try to find it in `$PATH`. `gpg-connect-agent` is required if `dirmngr` is specified or found in `$PATH`.
 * `TORSOCKS_BINARY`: Path to `torsocks`. If not set, will use `torsocks` from the `$PATH`.
 * `GNUPG_HOMEDIR`: Value for the `--homedir` argument of `gpg`. Ignored when `PARCIMONIE_USER=*`. If not set, no `--homedir` argument is passed, which usually means `~/.gnupg` will be used.
 * `GNUPG_KEYSERVER`: Value for the `--keyserver` argument of `gpg`. If not set, no `--keyserver` argument is passed, which means your default keyserver will be used.
