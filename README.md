@@ -180,7 +180,7 @@ parcimonie-git                                 parcimonie-sh-git
 [parcimonie-original-design.md]: https://github.com/EtiennePerot/parcimonie.sh/blob/master/parcimonie-original-design.md
 [National Security Agency]: https://en.wikipedia.org/wiki/National_Security_Agency
 [parcimonie-sh-git package on the Arch User Repository]: https://aur.archlinux.org/packages/parcimonie-sh-git
-[parcimonie package in the Fedora package database]: https://admin.fedoraproject.org/pkgdb/package/parcimonie.sh/
+[parcimonie package in the Fedora package database]: https://apps.fedoraproject.org/packages/parcimonie.sh
 [Arch User Repository]: https://aur.archlinux.org/
 [getTimeToWait function]: https://github.com/EtiennePerot/parcimonie.sh/blob/2ce44f45af2f48565aa42155b0bb96f07d373cbc/parcimonie.sh#L152-L171
 [torsocks]: https://gitweb.torproject.org/torsocks.git/
