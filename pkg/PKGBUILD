@@ -46,6 +46,7 @@ package() {
 	install -D -m644 README.md "${pkgdir}/usr/share/parcimonie.sh/README.md"
 	install -D -m755 parcimonie.sh "${pkgdir}/usr/share/parcimonie.sh/parcimonie.sh"
 	install -D -m644 pkg/parcimonie.sh@.service "${pkgdir}/usr/lib/systemd/system/parcimonie.sh@.service"
+	install -D -m644 pkg/parcimonie.sh.user.service "${pkgdir}/usr/lib/systemd/user/parcimonie.sh.service"
 	install -D -m644 pkg/sample-configuration.conf.sample "${pkgdir}/etc/parcimonie.sh.d/sample-configuration.conf.sample"
 	install -D -m644 pkg/all-users.conf "${pkgdir}/etc/parcimonie.sh.d/all-users.conf"
 	mkdir -p "${pkgdir}/usr/bin"
