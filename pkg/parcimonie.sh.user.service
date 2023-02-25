@@ -3,7 +3,7 @@ Description=parcimonie with config file ~/.config/parcimonie.sh.conf
 
 [Service]
 Type=simple
-EnvironmentFile=~/.config/parcimonie.sh.conf
+EnvironmentFile=-%E/parcimonie.sh.conf
 ExecStart=/usr/bin/parcimonie.sh
 
 [Install]
