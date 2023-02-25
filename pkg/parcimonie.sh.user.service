@@ -7,4 +7,4 @@ EnvironmentFile=-%E/parcimonie.sh.conf
 ExecStart=/usr/bin/parcimonie.sh
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
