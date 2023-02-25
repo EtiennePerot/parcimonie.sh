@@ -1,0 +1,10 @@
+[Unit]
+Description=parcimonie with config file ~/.config/parcimonie.sh.conf
+
+[Service]
+Type=simple
+EnvironmentFile=-%E/parcimonie.sh.conf
+ExecStart=/usr/bin/parcimonie.sh
+
+[Install]
+WantedBy=default.target

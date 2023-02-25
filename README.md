@@ -59,6 +59,8 @@ If you installed the Arch package or the Fedora package, you have a parameterize
 
 A ready-to-use configuration file is provided at `/etc/parcimonie.sh.d/all-users.conf`; it is set to start `parcimonie.sh` for all users on the system who have a `~/.gnupg` directory. If that sounds like what you want, you can enable it right away using the `parcimonie.sh@all-users` service. If not, another sample configuration file is provided at `/etc/parcimonie.sh.d/sample-configuration.conf.sample` (Arch package) or at `/usr/share/doc/parcimonie.sh/sample-configuration.conf.sample` (Fedora package).
 
+You can also use the systemd user service called `parcimonie.sh`, which uses the configuration file `~/.config/parcimonie.sh.conf`.
+
 ## Why a reimplementation?
 
 Oh gee, let me think.
